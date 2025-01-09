@@ -1,11 +1,13 @@
+// main.dart
 import 'package:flutter/material.dart';
-import 'package:taskly/pages/home_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:taskly/models/task.dart';
+import 'package:taskly/pages/home_page.dart';
 
 void main() async {
-  await Hive.initFlutter(
-      'hive_boxes'); //THIS INITIALIZES A FUTURE VOID AND ITS A NOSQL DB AND IT STORED DATA LIKE HOW A GRAPH WORKS - KEY:VALUE PAIR
-  //create hive_boxes folder and add its relative path here
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskAdapter());
   runApp(const MyApp());
 }
 
@@ -17,8 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Taskly',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-        useMaterial3: true,
+        primarySwatch: Colors.red,
       ),
       home: HomePage(),
     );
